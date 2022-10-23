@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Storage {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">顾客订单管理</h5>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- [ breadcrumb ] end -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>订单管理</h5>
+                            </div>
+                            <div class="card-block table-border-style">
+
+
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                    
+                                    <button type="submit" class="btn btn-primary">更新</button>
+                                    <a href="{% url 'customer_indent_list' %}" class='btn btn-dark'>取消</a>
+                                </form>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="{% static 'assets/plugins/jquery/js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/jquery/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/jquery/js/jquery.datetimepicker.js' %}"></script>
+
+    <script>
+        $(function () {
+            $("#id_customer").autocomplete({
+                source: "{% url 'auto_customer_name' %}",
+            });
+
+            $("#id_good").autocomplete({
+                source: "{% url 'auto_good_name' %}",
+            });
+
+            $("#id_employees").autocomplete({
+                source: "{% url 'auto_employees_name' %}",
+            });
+
+            $("#id_factory").autocomplete({
+                source: "{% url 'auto_factory_name' %}",
+            });
+
+        });
+    </script>
+
+{% endblock javascripts %}

@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+{% load good_extras %}
+
+{% block title %} Borrow Records {% endblock %} }
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">订单列表</h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>总计 {{ count_total }} 订单</h5>
+                                </div>
+                                {% show_messages %}
+
+
+                                <div class="card-block ">
+                                    <div class='row'>
+                                        <div class="col-8">
+                                            <b>排序 : - </b>
+                                            <a href="{% url 'customer_indent_list' %}?search={{ search }}&orderby=Id">编号</a> |
+                                            <a href="{% url 'customer_indent_list' %}?search={{ search }}&orderby=customer">顾客</a> |
+                                            <a href="{% url 'customer_indent_list' %}?search={{ search }}&orderby=good">商品</a> |
+                                            <a href="{% url 'customer_indent_list' %}?search={{ search }}&orderby=employees">员工</a> |
+                                            <a href="{% url 'customer_indent_list' %}?search={{ search }}&orderby=factory">工厂</a>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <form class="form-inline mb-2">
+                                                <div class="form-group  mb-2">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="search" ,
+                                                           id='search' ,
+                                                           placeholder="输入内容..." ,
+                                                           value={{ search }}
+                                                    >
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary mb-2 ml-1 btn-sm">搜索</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive table-hover">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>顾客</th>
+                                                <th>商品</th>
+                                                <th>数量</th>
+                                                <th>收款金额</th>
+                                                <th>快递单号</th>
+                                                <th>订单状态</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for record in indent %}
+                                                <tr>
+                                                    <td>{{ record.id }}</td>
+                                                    <td>{{ record.customer }}</td>
+                                                    <td>{{ record.good }}</td>
+                                                    <td>{{ record.number }}</td>
+                                                    <td>{{ record.income }}</td>
+                                                    <td>{{ record.track_num }}</td>
+                                                    <td>{{ record.get_status_display }}</td>
+                                                    <td>
+                                                        {% if request.user|has_group:"销售" or request.user.is_superuser%}
+                                                        <a href="{% url 'customer_indent_update' record.pk %}" class="badge badge-info"><i
+                                                                class="feather icon-edit"></i>&nbsp;编辑</a>&nbsp;
+
+                                                        <a href="{% url 'customer_indent_delete' record.pk %}" class="badge badge-danger"><i
+                                                                class="feather icon-trash-2"></i>&nbsp;删除</a>
+                                                        {% endif %}
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% if request.user|has_group:"销售" or request.user.is_superuser %}
+                                    <div class="row">
+                                        <div class='col-6'>
+                                            <a href="{% url 'customer_indent_create' %}" class='btn btn-primary'>新增订单</a>
+                                        </div>
+                                        <div class='col-6'>
+
+                                            {% show_pagination %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

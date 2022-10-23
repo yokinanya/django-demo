@@ -1,0 +1,117 @@
+{% extends "layouts/base.html" %}
+{% load good_extras %}
+
+{% block title %} Borrow Records {% endblock %} }
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">订单列表</h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>总计 {{ count_total }} 订单</h5>
+                                </div>
+                                {% show_messages %}
+
+
+                                <div class="card-block ">
+                                    <div class='row'>
+                                        <div class="col-8">
+                                            <b>Sort By : - </b>
+                                            <a href="{% url 'record_list_fed' %}?search={{ search }}&orderby=id">编号</a> |
+                                            <a href="{% url 'record_list_fed' %}?search={{ search }}&orderby=customer_indent">顾客订单</a> |
+                                            <a href="{% url 'record_list_fed' %}?search={{ search }}&orderby=employees">员工</a>
+
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <form class="form-inline mb-2">
+                                                <div class="form-group  mb-2">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="search" ,
+                                                           id='search' ,
+                                                           placeholder="输入内容..." ,
+                                                           value={{ search }}
+                                                    >
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary mb-2 ml-1 btn-sm">搜索</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive table-hover">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>顾客订单</th>
+                                                <th>员工</th>
+                                                <th>内容</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for record in indent_fed %}
+                                                <tr>
+                                                    <td>{{ record.id }}</td>
+                                                    <td>{{ record.customer_indent }}</td>
+                                                    <td>{{ record.employees }}</td>
+                                                    <td>{{ record.text }}</td>
+                                                    <td>
+                                                        <a href="{% url 'record_update_fed' record.pk %}" class="badge badge-info"><i
+                                                                class="feather icon-edit"></i>&nbsp;编辑</a>&nbsp;
+
+                                                        <a href="{% url 'record_delete_fed' record.pk %}" class="badge badge-danger"><i
+                                                                class="feather icon-trash-2"></i>&nbsp;删除</a>
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class='col-6'>
+                                            <a href="{% url 'record_create_fed' %}" class='btn btn-primary'>新增订单</a>
+                                        </div>
+                                        <div class='col-6'>
+
+                                            {% show_pagination %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

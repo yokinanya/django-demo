@@ -1,0 +1,131 @@
+{% load good_extras %}
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a target="_blank"
+               href="" class="b-brand">
+                <div class="b-bg">
+                    <i class="feather icon-trending-up"></i>
+                </div>
+                <span class="b-title">文房四宝销售系统</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+        </div>
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>菜单</label>
+                </li>
+                <li
+                        class="nav-item {% if 'index' in segment %} active {% endif %}">
+                    <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
+                            class="pcoded-mtext">主页</span></a>
+                </li>
+
+                <!-- 订单 -->
+                <li class="nav-item pcoded-menu-caption">
+                    <label>订单</label>
+                </li>
+                {% if request.user|has_group:"销售" or request.user|has_group:"跟单员" or request.user|has_group:"售后" or request.user|has_group:"财务" or request.user.is_superuser %}
+                <li class="nav-item {% if request.resolver_match.url_name == 'customer_indent_list' %} active {% endif %}">
+                    <a href="{% url 'customer_indent_list' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span
+                            class="pcoded-mtext">顾客订单</span></a>
+                </li>
+                {% endif %}
+                {% if request.user|has_group:"跟单员" or request.user|has_group:"财务" or request.user.is_superuser %}
+                <li class="nav-item {% if request.resolver_match.url_name == 'record_list_fac' %} active {% endif %}">
+                    <a href="{% url 'record_list_fac' %}" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-file-text"></i></span><span
+                            class="pcoded-mtext">工厂订单</span></a>
+                </li>
+                {% endif %}
+                {% if request.user|has_group:"售后" %}
+                <li class="nav-item {% if request.resolver_match.url_name == 'record_list_fed' %} active {% endif %}">
+                    <a href="{% url 'record_list_fed' %}" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-file-text"></i></span><span
+                            class="pcoded-mtext">反馈订单</span></a>
+                </li>
+                {% endif %}
+
+                <!-- 管理 -->
+
+                <li class="nav-item pcoded-menu-caption">
+                    <label>管理</label>
+                </li>
+                {% if request.user.is_superuser %}
+                <li class="nav-item pcoded-hasmenu {% if request.resolver_match.url_name == 'good_list' or request.resolver_match.url_name == 'good_create' or request.resolver_match.url_name == 'good_update' or request.resolver_match.url_name == 'good_delete' or request.resolver_match.url_name == 'good_detail' %} active pcoded-trigger {% endif %}">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span
+                            class="pcoded-mtext">商品管理</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{% url 'good_list' %}" class="">商品列表</a></li>
+                        <li class=""><a href="{% url 'good_create' %}" class="">增加商品</a></li>
+                    </ul>
+                </li>
+                <!-- Management Factory -->
+                {% url 'factory_list' as factory_list %}
+                {% url 'factory_create' as factory_create %}
+                {% url 'factory_delete' as factory_delete %}
+                <li class="nav-item pcoded-hasmenu {% if request.path == factory_list or request.path == factory_create or  request.path == factory_delete %} active pcoded-trigger {% endif %}">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span
+                            class="pcoded-mtext">工厂管理</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{% url 'factory_list' %}" class="">工厂列表</a></li>
+                        <li class=""><a href="{% url 'factory_create' %}" class="">增加工厂</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if request.user|has_group:"销售" or request.user|has_group:"售后" or request.user.is_superuser %}
+                <!-- Customer  -->
+                <li class="nav-item pcoded-hasmenu {% if request.resolver_match.url_name == 'customer_list' or request.resolver_match.url_name == 'customer_create' or request.resolver_match.url_name == 'customer_update' or request.resolver_match.url_name == 'customer_delete' or request.resolver_match.url_name == 'customer_detail' %} active pcoded-trigger {% endif %}">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span
+                            class="pcoded-mtext">顾客管理</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{% url 'customer_list' %}" class="">顾客列表</a></li>
+                        {% if request.user|has_group:"销售" %}
+                        <li class=""><a href="{% url 'customer_create' %}" class="">添加顾客</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+                <!-- User Logs -->
+
+                {% url 'profile_create' as profile_create %}
+                <li class="nav-item pcoded-menu-caption">
+                    <label>用户管理</label>
+                </li>
+
+
+                {% if request.user|has_group:"logs" %}
+                    <li class="nav-item {% if request.resolver_match.url_name == 'user_activity_list' %} active {% endif %} {% if request.resolver_match.url_name == 'user_activity_delete' %} active {% endif %}">
+                        <a href="{% url 'user_activity_list' %}" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-file-text"></i></span><span class="pcoded-mtext"></span>Logs</a>
+                    </li>
+                {% endif %}
+
+                {% if request.user|has_group:"download_data" %}
+                    <li class="nav-item {% if request.resolver_match.url_name == 'data_center' %} active {% endif %}">
+                        <a href="{% url 'data_center' %}" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-file-text"></i></span><span class="pcoded-mtext">Data Center</span></a>
+                    </li>
+                {% endif %}
+
+
+                {% if request.user|has_group:"api" %}
+                    <li class="nav-item {% if request.resolver_match.url_name == 'api-overview' %} active {% endif %}">
+                        <a href="{% url 'api-overview' %}" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-file-text"></i></span><span class="pcoded-mtext">API</span></a>
+                    </li>
+                {% endif %}
+
+                {% if request.user.is_superuser %}
+                    <li class="nav-item {% if request.resolver_match.url_name == 'employees_list' %} active {% endif %}">
+                        <a href="{% url 'employees_list' %}" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-file-text"></i></span><span class="pcoded-mtext">员工</span></a>
+                    </li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </div>
+</nav>

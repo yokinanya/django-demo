@@ -1,0 +1,91 @@
+{% extends "layouts/base.html" %}
+{% load good_extras %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+    <div class="pcoded-inner-content">
+
+        <div class="main-body">
+            <br>
+            <div class="page-wrapper">
+                <div class="row">
+                    <!--  Count Goods  -->
+                    <div class='col-md-3'>
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-book f-40 text-c-blue "></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{ data_count.good }}</h3>
+                                        <span class="d-block text-uppercase">商品数量</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Count Members -->
+                    <div class='col-md-3'>
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-user-friends f-40 " style="color:coral"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{ data_count.customer }}</h3>
+                                        <span class="d-block text-uppercase">顾客数量</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Count Categories -->
+                    <div class='col-md-3'>
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-cubes f-40 text-c-purple"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{ data_count.factory }}</h3>
+                                        <span class="d-block text-uppercase">工厂数量</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Count Publishers -->
+                    <div class='col-md-3'>
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class=" feather icon-file-text f-40 text-c-green"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{{ data_count.indent }}</h3>
+                                        <span class="d-block text-uppercase">未完成订单数量</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

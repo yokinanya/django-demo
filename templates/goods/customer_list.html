@@ -1,0 +1,133 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Management {% endblock %}
+{% load good_extras %}
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">顾客管理</h5>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <!-- [ basic-table ] start -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>总计 {{ count_total }} 顾客</h5>
+                                </div>
+
+                                {% show_messages %}
+                                <div class="card-block ">
+                                    <div class='row'>
+                                        <div class="col-8">
+                                            <b>排序 : - </b>
+                                            <a href="{% url 'customer_list' %}?search={{ search }}&orderby=id">编号</a> |
+                                            <a href="{% url 'customer_list' %}?search={{ search }}&orderby=name">姓名</a> |
+                                            <a href="{% url 'customer_list' %}?search={{ search }}&orderby=vip_level">VIP等级</a>
+                                            <a></a>
+                                            <a></a>
+                                            <a></a>
+                                            <a></a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <form class="form-inline mb-2">
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="search" ,
+                                                           id='search' ,
+                                                           placeholder="输入内容..." ,
+                                                           value={{ search }}
+                                                    >
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary mb-2 btn-sm">搜索</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive table-hover">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th> #
+                                                <th/>
+                                                <th>姓名</th>
+                                                <th>性别</th>
+                                                <th>电话号码</th>
+                                                <th>地址</th>
+                                                <th>生日</th>
+                                                <th>VIP等级</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for customerx in customer %}
+                                                <tr>
+                                                    <td>{{ customerx.id }}</td>
+                                                    <td><a class='badge badge-secondary '><i class="feather icon-user"></i>&nbsp;{{ customerx.name }}</a></td>
+                                                    <td>{{ customerx.get_sex_display }}</td>
+                                                    <td>{{ customerx.phone }}</td>
+                                                    <td>{{ customerx.address }}</td>
+                                                    <td>{{ customerx.birthdate|date:"Y-m-d" }}</td>
+                                                    <td>{{ customerx.vip_level }}</td>
+                                                    <td>{{ customerx.id }}</td>
+                                                    <td>
+                                                        {% if request.user|has_group:"销售"%}
+                                                        <a href="{% url 'customer_update' customerx.pk %}" class="badge badge-info"><i
+                                                                class="feather icon-edit"></i>&nbsp;编辑</a>&nbsp;
+                                                        <a href="{% url 'customer_delete' customerx.pk %}" class="badge badge-danger"><i
+                                                                class="feather icon-trash-2"></i>&nbsp;删除</a></td>
+                                                        {% endif %}
+                                                </tr>
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% if request.user|has_group:"销售" or request.user|has_group:"管理" %}
+                                    <div class="row">
+                                        <div class='col-6'>
+                                            <a href="{% url 'customer_create' %}" class='btn btn-primary'>新增顾客</a>
+                                        </div>
+                                        <div class='col-6'>
+                                            {% show_pagination %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- [ Main Content ] end -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

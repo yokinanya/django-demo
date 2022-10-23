@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+{% load good_extras %}
+{% block title %} Management {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">商品管理</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <!-- [ basic-table ] start -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>总计 {{ count_total }} 商品</h5>
+                                </div>
+
+                                {% show_messages %}
+
+                                <div class="card-block">
+                                    <div class='row'>
+                                        <div class="col-8">
+                                            <b>排序 : - </b>
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=id">编号</a> |
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=name">商品名称</a> |
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=factory">工厂</a> |
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=types">类别</a> |
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=brand">品牌</a> |
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=specs">规格</a> |
+                                            <a href="{% url 'good_list' %}?search={{ search }}&orderby=color">颜色</a>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <form class="form-inline mb-2">
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="search" ,
+                                                           id='search' ,
+                                                           placeholder="输入内容..." ,
+                                                           value={{ search }}
+                                                    >
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary mb-2 btn-sm">搜索</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive ">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>商品名称</th>
+                                                <th>价格</th>
+                                                <th>工厂</th>
+                                                <th>类别</th>
+                                                <th>品牌</th>
+                                                <th>规格</th>
+                                                <th>颜色</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for good in goods %}
+                                                <tr>
+                                                    <th scope="row">{{ good.id }}</th>
+                                                    <td>{{ good.name }}</td>
+                                                    <td>{{ good.price }}</td>
+                                                    <td>{{ good.factory }}</td>
+                                                    <td>{{ good.types }}</td>
+                                                    <td>{{ good.brand }}</td>
+                                                    <td>{{ good.specs }}</td>
+                                                    <td>{{ good.color }}  </td>
+                                                    <td>
+                                                        {#                                                        <a href="{% url 'good_detail' good.id %}" class="badge badge-warning"><i#}
+                                                        {#                                                                class="feather icon-eye"></i></a>#}
+                                                        <a href="{% url 'good_update' good.id %}" class="badge badge-info"><i
+                                                                class="feather icon-edit"></i>&nbsp;编辑</a>&nbsp;
+                                                        <a href="{% url 'good_delete' good.id %}" class="badge badge-danger"><i
+                                                                class="feather icon-trash-2"></i>&nbsp;删除</a>&nbsp;
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class='col-4'>
+                                            <a href="{% url 'good_create' %}" class='btn btn-primary'>新增商品</a>
+                                        </div>
+                                        <div class='col-8'>
+                                            {% show_pagination %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

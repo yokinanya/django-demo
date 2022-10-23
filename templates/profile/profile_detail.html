@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} User Admin{% endblock %}
+
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">用户中心</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="row">
+
+                        <div class="col-md-7">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-user-tie"></i>&nbsp;个人信息 </h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5><span class="badge badge-pill badge-info">姓名</span>&nbsp;{{ profile.namex }}</h5>
+                                    <h5><span class="badge badge-pill badge-info">电话</span>&nbsp;{{ profile.phone_number }}</h5>
+                                    <h5 class="m-b-20"><span class="badge badge-pill badge-info">职位</span>&nbsp;{{ profile.job }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'profile_update' profile.pk %}" class='btn btn-dark'>编辑</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
