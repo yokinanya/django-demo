@@ -39,7 +39,7 @@
                             class="pcoded-mtext">工厂订单</span></a>
                 </li>
                 {% endif %}
-                {% if request.user|has_group:"售后" %}
+                {% if request.user|has_group:"售后" or request.user.is_superuser %}
                 <li class="nav-item {% if request.resolver_match.url_name == 'record_list_fed' %} active {% endif %}">
                     <a href="{% url 'record_list_fed' %}" class="nav-link "><span class="pcoded-micon"><i
                             class="feather icon-file-text"></i></span><span

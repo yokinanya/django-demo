@@ -131,8 +131,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
         'HOST': '127.0.0.1',  # 数据库主机
         'PORT': 3306,  # 数据库端口
-        'USER': 'sales',  # 数据库用户名
-        'PASSWORD': 'Neko2022+',  # 数据库用户密码
+        'USER': '',  # 数据库用户名
+        'PASSWORD': '',  # 数据库用户密码
         'NAME': 'demo'  # 数据库名字
     }
 }

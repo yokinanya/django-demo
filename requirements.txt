@@ -72,8 +72,6 @@ pyrsistent==0.18.0
 python-dateutil==2.8.2
 python-decouple==3.4
 pytz==2021.1
-pywin32==303
-pywinpty==1.1.6
 pyzmq==22.3.0
 qtconsole==5.2.2
 QtPy==2.0.0
@@ -96,3 +94,4 @@ webencodings==0.5.1
 whitenoise==5.2.0
 widgetsnbextension==3.5.2
 mysqlclient
+asgiref~=3.4.1
